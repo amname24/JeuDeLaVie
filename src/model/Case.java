@@ -1,21 +1,24 @@
 package model;
 
 public class Case {
-	/*couleur:  0 = blanc
+	/*couleur:  
+	 * 			-1 = vert => Plante
+	 * 			0 = blanc
 	 * 			1 = rouge
+	 * 			
 	 * 		   autres couleurs � impl�menter dans le prochain sprint
 	 */
 	private int couleur;
 	private Fourmi occupante;
 	
+	public void affiche(){
+		if(occupante!=null) System.out.print("+"+occupante.getCouleur()+" ");
+		else System.out.print(" "+couleur+" ");
+	}
 	public Case()
 	{
 		couleur = 0;
 		occupante = null;
-	}
-	
-	public void affiche(){
-		System.out.print(couleur);
 	}
 	
 	public void ajoutFourmi(Fourmi f)

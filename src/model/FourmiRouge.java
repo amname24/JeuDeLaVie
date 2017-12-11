@@ -30,15 +30,20 @@ public class FourmiRouge implements Fourmi{
 	{
 		return(couleur);
 	}
-
-	@Override
+	private int mod(int x, int y)
+	{
+		return x % y < 0 ? x % y + y : x % y;
+	}
+	
 	public int tourner(int couleur) 
 	{
 		if(couleur == 1)
-			direction = (direction + 1) % 4;
+		{
+			direction = mod(direction + 1 , 4);
+		}
 		else
 			if(couleur == 0)
-				direction = (direction - 1) % 4;
+				direction = mod(direction - 1 , 4);
 		
 		return(direction);
 	}
