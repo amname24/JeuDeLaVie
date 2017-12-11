@@ -6,6 +6,8 @@ public class Main {
 		
 		Plateau p = new Plateau();
 		p.ajouterFourmi(25, 25, 1);
+		p.update();
+		p.affiche();
 		
 	}
 

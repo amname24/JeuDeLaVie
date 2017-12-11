@@ -14,6 +14,10 @@ public class Case {
 		occupante = null;
 	}
 	
+	public void affiche(){
+		System.out.print(couleur);
+	}
+	
 	public void ajoutFourmi(Fourmi f)
 	{
 		this.occupante = f;
