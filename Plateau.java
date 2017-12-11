@@ -1,6 +1,4 @@
-package controller;
-
-import model.*;
+package model;
 
 public class Plateau {
 	private Case[][] plateau;
