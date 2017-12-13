@@ -8,5 +8,6 @@ public interface Fourmi {
 	
 	//retourne la nouvelle orientation de la Fourmi
 	public int tourner(int couleur);
+	public Object clone();
 
 }
