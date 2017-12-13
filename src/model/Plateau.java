@@ -63,9 +63,9 @@ public class Plateau implements Cloneable{
 					switch(direction)
 					{
 					case 0: //nord
-						if(plateau[mod(i + 1 , 50)][j].getOccupante() == null)
+						if(plateau[mod(i - 1 , 50)][j].getOccupante() == null)
 						{
-							p.plateau[mod(i + 1 , 50)][j].ajoutFourmi(plateau[i][j].getOccupante());
+							p.plateau[mod(i - 1 , 50)][j].ajoutFourmi(plateau[i][j].getOccupante());
 							p.plateau[i][j].supFourmi();
 						}
 						break;
@@ -79,9 +79,9 @@ public class Plateau implements Cloneable{
 						break;
 						
 					case 2: //sud
-						if(plateau[mod(i - 1, 50)][j].getOccupante() == null)
+						if(plateau[mod(i + 1, 50)][j].getOccupante() == null)
 						{
-							p.plateau[mod(i - 1 , 50)][j].ajoutFourmi(plateau[i][j].getOccupante());
+							p.plateau[mod(i + 1 , 50)][j].ajoutFourmi(plateau[i][j].getOccupante());
 							p.plateau[i][j].supFourmi();
 						}
 						break;

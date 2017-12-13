@@ -1,6 +1,6 @@
 package model;
 
-public class FourmiRouge implements Fourmi{
+public class FourmiRouge implements Fourmi, Cloneable{
 	
 	/*direction: 0 = nord
 	 * 			 1 = est
@@ -9,7 +9,7 @@ public class FourmiRouge implements Fourmi{
 	 */
 	private int direction; 
 	/*couleur: 1 = rouge
-	 * 		   autres couleurs � impl�menter dans le prochain sprint
+	 * 		   autres couleurs a implementer dans le prochain sprint
 	 */
 	private int couleur;
 	
@@ -30,6 +30,7 @@ public class FourmiRouge implements Fourmi{
 	{
 		return(couleur);
 	}
+	
 	private int mod(int x, int y)
 	{
 		return x % y < 0 ? x % y + y : x % y;
@@ -47,4 +48,17 @@ public class FourmiRouge implements Fourmi{
 		
 		return(direction);
 	}
+	
+	public Object clone()
+	{
+		FourmiRouge f = new FourmiRouge();
+		f.setDirection(direction);
+		return(f);
+	}
+
+	private void setDirection(int d) {
+		direction = d;
+		
+	}
+	
 }
