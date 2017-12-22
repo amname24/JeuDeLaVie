@@ -15,9 +15,16 @@ public class Case {
 		if(occupante!=null) System.out.print("+"+occupante.getCouleur()+" ");
 		else System.out.print(" "+couleur+" ");
 	}
+	
 	public Case()
 	{
 		couleur = 0;
+		occupante = null;
+	}
+	
+	public Case(int couleur)
+	{
+		this.couleur = couleur;
 		occupante = null;
 	}
 	

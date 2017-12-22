@@ -17,7 +17,6 @@ public class FourmiRouge implements Fourmi, Cloneable{
 	{
 		direction = 0;
 		couleur = 1;
-		System.out.println("On cree une fourmi rouge");
 
 	}
 	
