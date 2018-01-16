@@ -19,12 +19,15 @@ public class FourmiController
 		modele.addObserver((Observer) vue1);
 	}
 	
-	public void modifyCell(int x, int y)
+	public void modifyCell(int x, int y, int couleur)
 	{
 		if(modele.caseLibre(x, y))
-			modele.ajouterFourmi(x, y, 1);
+			modele.ajouterFourmi(x, y, couleur);
 		else
 			modele.supFourmi(x, y);
+	}
+	public void AddPlante(int x, int y){
+		modele.ajouterPlante(x, y);
 	}
 	
 	public void inputNextGeneration()
