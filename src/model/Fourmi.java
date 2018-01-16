@@ -1,6 +1,6 @@
 package model;
 
-public interface Fourmi {
+public interface Fourmi extends Cloneable {
 	
 	public int getDirection();
 	
@@ -8,6 +8,7 @@ public interface Fourmi {
 	
 	//retourne la nouvelle orientation de la Fourmi
 	public int tourner(int couleur);
+	
 	public Object clone();
 
 }

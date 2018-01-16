@@ -1,6 +1,6 @@
 package model;
 
-public class Case {
+public class Case implements Cloneable {
 	/*couleur:  
 	 * 			-1 = vert => Plante
 	 * 			0 = blanc
@@ -52,5 +52,20 @@ public class Case {
 	{
 		return(occupante);
 	}
+	public boolean estMort(){
+		return false;
+	}
+	public Object clone()
+	{
+		Case c = new Case();
+		if(getOccupante()!=null)
+			c.ajoutFourmi((Fourmi)getOccupante().clone());
+		c.setCouleur(getCouleur());
+		return c;
+	}
+	public boolean isPlante(){
+		return false;
+	}
 }
+
 
