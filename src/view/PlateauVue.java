@@ -17,21 +17,25 @@ public class PlateauVue implements Observer
 {
 	private JFrame mainFrame;
 	private GrillePanel grille;
-	private JButton btNG, btReset, btPlay, btStop, btRand;
+	private JButton btNG, btReset, btPlay, btStop,btPlante;
+	private JButton btFR,btFB,btFJ;
 	private FourmiController control;
 	private JSlider slider;
+	private Boolean isPlante;
+	public int couleur;
 	
 	public PlateauVue(FourmiController control)
 	{
 		this.control = control;
 		initComponents();
 		mainFrame.setVisible(true);
+		isPlante = false;
+		couleur = 0;
 	}
 	
 	public void update(Observable o , Object arg)
 	{
 		Plateau ngrille = (Plateau) arg;
-		
 		grille.setGrille(ngrille);
 		grille.repaint();
 	}
@@ -54,7 +58,13 @@ public class PlateauVue implements Observer
 			public void mouseExited(MouseEvent e) {}
 	
 			public void mousePressed(MouseEvent e) {
-				control.modifyCell(e.getX() / 10, e.getY() / 10);
+				if (isPlante)
+				{
+					isPlante = false;
+					control.AddPlante(e.getX()/10, e.getY()/10);
+				}
+				else
+					control.modifyCell(e.getX() / 10, e.getY() / 10,couleur);
 			}
 	
 			public void mouseReleased(MouseEvent e) {}
@@ -68,19 +78,20 @@ public class PlateauVue implements Observer
 				control.inputNextGeneration();
 			}
 		});
+		
+		btPlante = new JButton("<html>ajouter une<br>Plante</html>");
+		btPlante.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isPlante = true;
+			}
+		});
+		
 		btReset = new JButton("<html>Remise a<br>zero</html>");
 		btReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				control.resetGrid();
 			}
 		});
-		
-		/*btRand = new JButton("<html>Rand<br>lol</html>");
-		btRand.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				control.Randlol();
-			}
-		});*/
 		
 		Box animbox = Box.createHorizontalBox();
 		btPlay = new JButton("Demarrer");
@@ -90,8 +101,8 @@ public class PlateauVue implements Observer
 				btNG.setEnabled(false);
 				btReset.setEnabled(false);
 				btPlay.setEnabled(false);
+				btPlante.setEnabled(false);
 				btStop.setEnabled(true);
-				//btRand.setEnabled(false);
 			}
 		});
 		
@@ -101,10 +112,10 @@ public class PlateauVue implements Observer
 			public void actionPerformed(ActionEvent e) {
 				control.stopAnimation();
 				btNG.setEnabled(true);
+				btPlante.setEnabled(true);
 				btReset.setEnabled(true);
 				btPlay.setEnabled(true);
 				btStop.setEnabled(false);
-				//btRand.setEnabled(true);
 			}
 		});
 		
@@ -115,10 +126,31 @@ public class PlateauVue implements Observer
 			}
 		});
 		
+		btFR = new JButton("Fourmi rouge");
+		btFR.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				couleur = 1;
+			}
+		});
+		btFB = new JButton("Fourmi bleue");
+		btFB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				couleur = 2;
+			}
+		});
+		btFJ = new JButton("Fourmi jaune");
+		btFJ.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				couleur = 3;
+			}
+		});
+		
 		buttonbox.add(btReset);
 		buttonbox.add(btNG);
-		//buttonbox.add(btRand);
-		
+		buttonbox.add(btFR);
+		buttonbox.add(btFB);
+		buttonbox.add(btFJ);
+		buttonbox.add(btPlante);
 		animbox.add(btPlay);
 		animbox.add(btStop);
 		animbox.add(slider);
@@ -130,5 +162,10 @@ public class PlateauVue implements Observer
 		mainbox.add(Box.createVerticalStrut(5));
 		
 		mainFrame.setContentPane(mainbox);
+	}
+
+	private ActionListener addActionListener(ActionListener actionListener) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

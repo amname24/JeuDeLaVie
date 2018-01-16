@@ -36,19 +36,42 @@ public class GrillePanel extends JPanel
 				{
 					if(grille.getCouleurCase(i, j) == 0)
 						g2d.draw(new Rectangle(i*10, j*10, 10, 10));
-					else
+					else 
+					{
+						Color c = g2d.getColor();
+						if( grille.getCouleurCase(i,j) ==1)
+							g2d.setColor(Color.RED);
+						if( grille.getCouleurCase(i,j) ==2)
+							g2d.setColor(Color.BLUE);
+						if( grille.getCouleurCase(i,j) ==3)
+							g2d.setColor(Color.YELLOW);
 						g2d.fill(new Rectangle(i*10, j*10, 10, 10));
+						g2d.setColor(c);
+					}
 					
 					if(!grille.caseLibre(i, j))
 					{
 						Color c = g2d.getColor();
-						g2d.setColor(Color.RED);
+						if(grille.getCouleurFourmi(i, j)==1)
+							g2d.setColor(Color.RED);
+						if(grille.getCouleurFourmi(i, j)==2)
+							g2d.setColor(Color.BLUE);
+						if(grille.getCouleurFourmi(i, j)==3)
+							g2d.setColor(Color.YELLOW);
+						g2d.fill(new Rectangle(i*10+2, j*10+2, 6, 6));
+						g2d.setColor(c);
+					}
+					else if(grille.getCouleurCase(i, j)==-1)
+					{
+						Color c = g2d.getColor();
+							g2d.setColor(Color.GREEN);
 						g2d.fill(new Rectangle(i*10+2, j*10+2, 6, 6));
 						g2d.setColor(c);
 					}
 				} 
 				else
 					g2d.draw(new Rectangle(i*10, j*10, 10, 10));
+				
 			}
 		}
 	}
