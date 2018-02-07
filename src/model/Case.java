@@ -6,7 +6,7 @@ public class Case implements Cloneable {
 	 * 			0 = blanc
 	 * 			1 = rouge
 	 * 			
-	 * 		   autres couleurs � impl�menter dans le prochain sprint
+	 * 		   autres couleurs a implementer dans le prochain sprint
 	 */
 	private int couleur;
 	private Fourmi occupante;
@@ -60,7 +60,7 @@ public class Case implements Cloneable {
 		Case c = new Case();
 		if(getOccupante()!=null)
 			c.ajoutFourmi((Fourmi)getOccupante().clone());
-		c.setCouleur(getCouleur());
+		c.setCouleur(couleur);
 		return c;
 	}
 	public boolean isPlante(){

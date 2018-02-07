@@ -18,7 +18,7 @@ public class PlateauVue implements Observer
 	private JFrame mainFrame;
 	private GrillePanel grille;
 	private JButton btNG, btReset, btPlay, btStop,btPlante;
-	private JButton btFR,btFB,btFJ;
+	private JButton btFR,btFB,btFJ, btFN;
 	private FourmiController control;
 	private JSlider slider;
 	private Boolean isPlante;
@@ -29,6 +29,7 @@ public class PlateauVue implements Observer
 		this.control = control;
 		initComponents();
 		mainFrame.setVisible(true);
+		mainFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		isPlante = false;
 		couleur = 0;
 	}
@@ -59,10 +60,7 @@ public class PlateauVue implements Observer
 	
 			public void mousePressed(MouseEvent e) {
 				if (isPlante)
-				{
-					isPlante = false;
 					control.AddPlante(e.getX()/10, e.getY()/10);
-				}
 				else
 					control.modifyCell(e.getX() / 10, e.getY() / 10,couleur);
 			}
@@ -129,19 +127,29 @@ public class PlateauVue implements Observer
 		btFR = new JButton("Fourmi rouge");
 		btFR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				isPlante = false;
 				couleur = 1;
 			}
 		});
 		btFB = new JButton("Fourmi bleue");
 		btFB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				isPlante = false;
 				couleur = 2;
 			}
 		});
 		btFJ = new JButton("Fourmi jaune");
 		btFJ.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				isPlante = false;
 				couleur = 3;
+			}
+		});
+		btFN = new JButton("Fourmi noire");
+		btFN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isPlante = false;
+				couleur = 4;
 			}
 		});
 		
@@ -150,6 +158,7 @@ public class PlateauVue implements Observer
 		buttonbox.add(btFR);
 		buttonbox.add(btFB);
 		buttonbox.add(btFJ);
+		buttonbox.add(btFN);
 		buttonbox.add(btPlante);
 		animbox.add(btPlay);
 		animbox.add(btStop);

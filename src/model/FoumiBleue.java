@@ -17,6 +17,7 @@ public class FoumiBleue implements Fourmi{
 		direction = 0;
 		couleur = 2;
 	}
+	
 	public FoumiBleue(int d)
 	{
 		direction = d;
@@ -47,6 +48,7 @@ public class FoumiBleue implements Fourmi{
 		else
 			if(couleur == 0)
 				direction = mod(direction - 1 , 4);
+		
 		return(direction);
 	}
 

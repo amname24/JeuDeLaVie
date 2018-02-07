@@ -9,7 +9,7 @@ public class FourmiRouge implements Fourmi{
 	 */
 	private int direction; 
 	/*couleur: 1 = rouge
-	 * 		   autres couleurs a implementer dans le prochain sprint
+	 * 
 	 */
 	private int couleur;
 	

@@ -4,7 +4,7 @@ import java.util.Observable;
 
 public class Plateau extends Observable implements Cloneable{
 	private Case[][] plateau;
-	public static final int size = 100;
+	public static final int size = 75;
 	
 	public Plateau()
 	{
@@ -39,12 +39,16 @@ public class Plateau extends Observable implements Cloneable{
 				case 3 :
 					plateau[x][y].ajoutFourmi(new FourmiJaune());
 					break;
+				case 4:
+					plateau[x][y].ajoutFourmi(new FourmiNoire());
+					break;
 			}
 		}
 		
 		setChanged();
 		notifyObservers(this);
 	}
+	
 	public void ajouterPlante(int x, int y){
 		plateau[x][y]= new Plante();
 		setChanged();
@@ -64,6 +68,8 @@ public class Plateau extends Observable implements Cloneable{
 	public void supFourmi(int i, int j)
 	{
 		plateau[i][j] = new Case(plateau[i][j].getCouleur());
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	public void updateGrid()
@@ -77,49 +83,166 @@ public class Plateau extends Observable implements Cloneable{
 				if(plateau[i][j].getOccupante() != null)
 				{
 					//reorientation de la fourmi
-					int direction = plateau[i][j].getOccupante().tourner(plateau[i][j].getCouleur());					//modification de la couleur de la case
-					if(plateau[i][j].getOccupante().getCouleur() == plateau[i][j].getCouleur())
+					int direction = plateau[i][j].getOccupante().tourner(plateau[i][j].getCouleur());
+					
+					int couleur = getCouleurFourmi(i, j);
+					
+					//modification de la couleur de la case
+					if(couleur == plateau[i][j].getCouleur())
 						p.plateau[i][j].setCouleur(0);
-						
-					else if (!plateau[i][j].isPlante())
-						p.plateau[i][j].setCouleur(plateau[i][j].getOccupante().getCouleur());
+					else if (!plateau[i][j].isPlante() && couleur != 4)
+						p.plateau[i][j].setCouleur(couleur);
 				
 					//mouvement de la fourmi
-					switch(direction)
+					switch(p.getCouleurFourmi(i, j))
 					{
-					case 0: //nord
-						if(p.plateau[mod(i - 1 , size)][j].getOccupante() == null)
+					case 1: //fourmi rouge
+						switch(direction)
 						{
-							p.plateau[mod(i - 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
-							p.plateau[i][j].supFourmi();
+						case 0: //nord, pas jaune
+							if(p.plateau[mod(i - 1 , size)][j].getOccupante() == null && p.getCouleurCase(mod(i - 1 , size), j) != 3)
+							{
+								p.plateau[mod(i - 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
+								p.plateau[i][j].supFourmi();
+							}
+							break;
+							
+						case 1: //est, pas jaune
+							if(p.plateau[i][mod(j + 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j + 1 , size)) != 3)
+							{
+								p.plateau[i][mod(j + 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
+								p.plateau[i][j].supFourmi();
+							}
+							break;
+							
+						case 2: //sud, pas jaune
+							if(p.plateau[mod(i + 1, size)][j].getOccupante() == null && p.getCouleurCase(mod(i + 1 , size), j) != 3)
+							{
+								p.plateau[mod(i + 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
+								p.plateau[i][j].supFourmi();
+							}
+							break;
+							
+						case 3: //ouest, pas jaune
+							if(p.plateau[i][mod(j - 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j - 1 , size)) != 3)
+							{
+								p.plateau[i][mod(j - 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
+								p.plateau[i][j].supFourmi();
+							}
+							break;
 						}
 						break;
 						
-					case 1: //est
-						if(p.plateau[i][mod(j + 1 , size)].getOccupante() == null)
+					case 2: //fourmi bleue
+						switch(direction)
 						{
-							p.plateau[i][mod(j + 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
-							p.plateau[i][j].supFourmi();
+						case 0: //nord, pas rouge
+							if(p.plateau[mod(i - 1 , size)][j].getOccupante() == null && p.getCouleurCase(mod(i - 1 , size), j) != 1)
+							{
+								p.plateau[mod(i - 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
+								p.plateau[i][j].supFourmi();
+							}
+							break;
+							
+						case 1: //est, pas rouge
+							if(p.plateau[i][mod(j + 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j + 1 , size)) != 1)
+							{
+								p.plateau[i][mod(j + 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
+								p.plateau[i][j].supFourmi();
+							}
+							break;
+							
+						case 2: //sud, pas rouge
+							if(p.plateau[mod(i + 1, size)][j].getOccupante() == null && p.getCouleurCase(mod(i + 1 , size), j) != 1)
+							{
+								p.plateau[mod(i + 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
+								p.plateau[i][j].supFourmi();
+							}
+							break;
+							
+						case 3: //ouest, pas rouge
+							if(p.plateau[i][mod(j - 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j - 1 , size)) != 1)
+							{
+								p.plateau[i][mod(j - 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
+								p.plateau[i][j].supFourmi();
+							}
+							break;
 						}
 						break;
 						
-					case 2: //sud
-						if(p.plateau[mod(i + 1, size)][j].getOccupante() == null)
+					case 3: //fourmi jaune
+						switch(direction)
 						{
-							p.plateau[mod(i + 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
-							p.plateau[i][j].supFourmi();
+						case 0: //nord, pas bleu
+							if(p.plateau[mod(i - 1 , size)][j].getOccupante() == null && p.getCouleurCase(mod(i - 1 , size), j) != 2)
+							{
+								p.plateau[mod(i - 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
+								p.plateau[i][j].supFourmi();
+							}
+							break;
+							
+						case 1: //est, pas bleu
+							if(p.plateau[i][mod(j + 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j + 1 , size)) != 2)
+							{
+								p.plateau[i][mod(j + 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
+								p.plateau[i][j].supFourmi();
+							}
+							break;
+							
+						case 2: //sud, pas bleu
+							if(p.plateau[mod(i + 1, size)][j].getOccupante() == null && p.getCouleurCase(mod(i + 1 , size), j) != 2)
+							{
+								p.plateau[mod(i + 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
+								p.plateau[i][j].supFourmi();
+							}
+							break;
+							
+						case 3: //ouest, pas bleu
+							if(p.plateau[i][mod(j - 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j - 1 , size)) != 2)
+							{
+								p.plateau[i][mod(j - 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
+								p.plateau[i][j].supFourmi();
+							}
+							break;
 						}
 						break;
 						
-					case 3: //ouest
-						if(p.plateau[i][mod(j - 1 , size)].getOccupante() == null)
+					case 4:
+						int xcible = 0, ycible = 0;
+						boolean trouvecible = false;
+						
+						for(int k = 0; k < size && !trouvecible; k++)
+							for(int l = 0; l < size && !trouvecible; l++)
+								if(p.plateau[k][l].getOccupante() != null && p.plateau[k][l].getOccupante().getCouleur() != 4 && !trouvecible)
+								{
+									System.out.println("je");
+									xcible = k;
+									ycible = l;
+									trouvecible = true;
+								}
+						
+						if(trouvecible)
 						{
-							p.plateau[i][mod(j - 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
+							xcible = i - xcible;
+							ycible = j - ycible;
+							
+							if(xcible < 0)
+								xcible = -1;
+							else if(xcible > 0)
+								xcible = 1;
+							if(ycible < 0)
+								ycible = -1;
+							else if(ycible > 0)
+								ycible = 1;
+							
 							p.plateau[i][j].supFourmi();
+							p.plateau[mod(i - xcible, size)][mod(j - ycible , size)].ajoutFourmi(plateau[i][j].getOccupante());
 						}
 						break;
 					}
+					
 				}
+				
 				if (plateau[i][j].isPlante())
 					if(plateau[i][j].getOccupante()!= null)
 					{
@@ -128,7 +251,7 @@ public class Plateau extends Observable implements Cloneable{
 						((Plante)p.plateau[i][j]).estMort();
 						if(estmort)
 						{
-							System.out.print("morte");
+							//System.out.print("morte");
 							p.plateau[i][j] = new Case();
 						}	
 						Fourmi f ;
@@ -160,7 +283,7 @@ public class Plateau extends Observable implements Cloneable{
 		for(int i = 0; i < size; i++)
 			for(int j = 0; j < size; j++)
 					p.plateau[i][j] =(Case) plateau[i][j].clone();
-		return p;	
+		return p;
 	}
 
 	public void resetGrid() {
@@ -173,11 +296,13 @@ public class Plateau extends Observable implements Cloneable{
 	{
 		return(plateau[i][j].getCouleur());
 	}
+	
 	public int getCouleurFourmi(int i, int j)
 	{
 		if(plateau[i][j].getOccupante()!=null)
 			return(plateau[i][j].getOccupante().getCouleur());
-		else return -1;
+		else 
+			return -1;
 	}
 	
 }
