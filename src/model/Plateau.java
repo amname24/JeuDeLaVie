@@ -220,7 +220,7 @@ public class Plateau extends Observable implements Cloneable{
 							break;
 							
 						case 4:
-							int xcible = 0, ycible = 0,xmin=100,ymin=100;
+							int xcible = 0, ycible = 0,xmin=200,ymin=200;
 							boolean trouvecible = false;
 							for(int k = 0; k < size; k++)
 								for(int l = 0; l < size ; l++)
