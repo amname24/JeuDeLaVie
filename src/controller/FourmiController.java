@@ -27,7 +27,9 @@ public class FourmiController
 			modele.supFourmi(x, y);
 	}
 	public void AddPlante(int x, int y){
-		modele.ajouterPlante(x, y);
+		if(!modele.casePlante(x, y))
+			modele.ajouterPlante(x, y);
+		else modele.supPlante(x, y);
 	}
 	
 	public void inputNextGeneration()

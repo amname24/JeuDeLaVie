@@ -34,11 +34,6 @@ public class FourmiNoire implements Fourmi{
 		return(couleur);
 	}
 	
-	private int mod(int x, int y)
-	{
-		return x % y < 0 ? x % y + y : x % y;
-	}
-	
 	public int tourner(int couleur) 
 	{
 		return(direction);

@@ -65,6 +65,16 @@ public class Plateau extends Observable implements Cloneable{
 		return(plateau[i][j].getOccupante() == null);
 	}
 	
+	public boolean casePlante(int i, int j)
+	{
+		return plateau[i][j].isPlante();
+	}
+	public void supPlante(int i, int j){
+		plateau[i][j] = new Case();
+		setChanged();
+		notifyObservers(this);
+	}
+	
 	public void supFourmi(int i, int j)
 	{
 		plateau[i][j] = new Case(plateau[i][j].getCouleur());
@@ -94,154 +104,165 @@ public class Plateau extends Observable implements Cloneable{
 						p.plateau[i][j].setCouleur(couleur);
 				
 					//mouvement de la fourmi
-					switch(p.getCouleurFourmi(i, j))
+					if(p.getCouleurFourmi(i, j) == couleur) // on vérifie que la fourmi n'a pas ete mangee
 					{
-					case 1: //fourmi rouge
-						switch(direction)
+						switch(couleur)
 						{
-						case 0: //nord, pas jaune
-							if(p.plateau[mod(i - 1 , size)][j].getOccupante() == null && p.getCouleurCase(mod(i - 1 , size), j) != 3)
+						case 1: //fourmi rouge
+							switch(direction)
 							{
-								p.plateau[mod(i - 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
-								p.plateau[i][j].supFourmi();
-							}
-							break;
-							
-						case 1: //est, pas jaune
-							if(p.plateau[i][mod(j + 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j + 1 , size)) != 3)
-							{
-								p.plateau[i][mod(j + 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
-								p.plateau[i][j].supFourmi();
-							}
-							break;
-							
-						case 2: //sud, pas jaune
-							if(p.plateau[mod(i + 1, size)][j].getOccupante() == null && p.getCouleurCase(mod(i + 1 , size), j) != 3)
-							{
-								p.plateau[mod(i + 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
-								p.plateau[i][j].supFourmi();
-							}
-							break;
-							
-						case 3: //ouest, pas jaune
-							if(p.plateau[i][mod(j - 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j - 1 , size)) != 3)
-							{
-								p.plateau[i][mod(j - 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
-								p.plateau[i][j].supFourmi();
-							}
-							break;
-						}
-						break;
-						
-					case 2: //fourmi bleue
-						switch(direction)
-						{
-						case 0: //nord, pas rouge
-							if(p.plateau[mod(i - 1 , size)][j].getOccupante() == null && p.getCouleurCase(mod(i - 1 , size), j) != 1)
-							{
-								p.plateau[mod(i - 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
-								p.plateau[i][j].supFourmi();
-							}
-							break;
-							
-						case 1: //est, pas rouge
-							if(p.plateau[i][mod(j + 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j + 1 , size)) != 1)
-							{
-								p.plateau[i][mod(j + 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
-								p.plateau[i][j].supFourmi();
-							}
-							break;
-							
-						case 2: //sud, pas rouge
-							if(p.plateau[mod(i + 1, size)][j].getOccupante() == null && p.getCouleurCase(mod(i + 1 , size), j) != 1)
-							{
-								p.plateau[mod(i + 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
-								p.plateau[i][j].supFourmi();
-							}
-							break;
-							
-						case 3: //ouest, pas rouge
-							if(p.plateau[i][mod(j - 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j - 1 , size)) != 1)
-							{
-								p.plateau[i][mod(j - 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
-								p.plateau[i][j].supFourmi();
-							}
-							break;
-						}
-						break;
-						
-					case 3: //fourmi jaune
-						switch(direction)
-						{
-						case 0: //nord, pas bleu
-							if(p.plateau[mod(i - 1 , size)][j].getOccupante() == null && p.getCouleurCase(mod(i - 1 , size), j) != 2)
-							{
-								p.plateau[mod(i - 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
-								p.plateau[i][j].supFourmi();
-							}
-							break;
-							
-						case 1: //est, pas bleu
-							if(p.plateau[i][mod(j + 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j + 1 , size)) != 2)
-							{
-								p.plateau[i][mod(j + 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
-								p.plateau[i][j].supFourmi();
-							}
-							break;
-							
-						case 2: //sud, pas bleu
-							if(p.plateau[mod(i + 1, size)][j].getOccupante() == null && p.getCouleurCase(mod(i + 1 , size), j) != 2)
-							{
-								p.plateau[mod(i + 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
-								p.plateau[i][j].supFourmi();
-							}
-							break;
-							
-						case 3: //ouest, pas bleu
-							if(p.plateau[i][mod(j - 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j - 1 , size)) != 2)
-							{
-								p.plateau[i][mod(j - 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
-								p.plateau[i][j].supFourmi();
-							}
-							break;
-						}
-						break;
-						
-					case 4:
-						int xcible = 0, ycible = 0;
-						boolean trouvecible = false;
-						
-						for(int k = 0; k < size && !trouvecible; k++)
-							for(int l = 0; l < size && !trouvecible; l++)
-								if(p.plateau[k][l].getOccupante() != null && p.plateau[k][l].getOccupante().getCouleur() != 4 && !trouvecible)
+							case 0: //nord, pas jaune
+								if(p.plateau[mod(i - 1 , size)][j].getOccupante() == null && p.getCouleurCase(mod(i - 1 , size), j) != 3)
 								{
-									System.out.println("je");
-									xcible = k;
-									ycible = l;
-									trouvecible = true;
+									p.plateau[mod(i - 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
+									p.plateau[i][j].supFourmi();
 								}
-						
-						if(trouvecible)
-						{
-							xcible = i - xcible;
-							ycible = j - ycible;
+								break;
+								
+							case 1: //est, pas jaune
+								if(p.plateau[i][mod(j + 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j + 1 , size)) != 3)
+								{
+									p.plateau[i][mod(j + 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
+									p.plateau[i][j].supFourmi();
+								}
+								break;
+								
+							case 2: //sud, pas jaune
+								if(p.plateau[mod(i + 1, size)][j].getOccupante() == null && p.getCouleurCase(mod(i + 1 , size), j) != 3)
+								{
+									p.plateau[mod(i + 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
+									p.plateau[i][j].supFourmi();
+								}
+								break;
+								
+							case 3: //ouest, pas jaune
+								if(p.plateau[i][mod(j - 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j - 1 , size)) != 3)
+								{
+									p.plateau[i][mod(j - 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
+									p.plateau[i][j].supFourmi();
+								}
+								break;
+							}
+							break;
 							
-							if(xcible < 0)
-								xcible = -1;
-							else if(xcible > 0)
-								xcible = 1;
-							if(ycible < 0)
-								ycible = -1;
-							else if(ycible > 0)
-								ycible = 1;
+						case 2: //fourmi bleue
+							switch(direction)
+							{
+							case 0: //nord, pas rouge
+								if(p.plateau[mod(i - 1 , size)][j].getOccupante() == null && p.getCouleurCase(mod(i - 1 , size), j) != 1)
+								{
+									p.plateau[mod(i - 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
+									p.plateau[i][j].supFourmi();
+								}
+								break;
+								
+							case 1: //est, pas rouge
+								if(p.plateau[i][mod(j + 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j + 1 , size)) != 1)
+								{
+									p.plateau[i][mod(j + 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
+									p.plateau[i][j].supFourmi();
+								}
+								break;
+								
+							case 2: //sud, pas rouge
+								if(p.plateau[mod(i + 1, size)][j].getOccupante() == null && p.getCouleurCase(mod(i + 1 , size), j) != 1)
+								{
+									p.plateau[mod(i + 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
+									p.plateau[i][j].supFourmi();
+								}
+								break;
+								
+							case 3: //ouest, pas rouge
+								if(p.plateau[i][mod(j - 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j - 1 , size)) != 1)
+								{
+									p.plateau[i][mod(j - 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
+									p.plateau[i][j].supFourmi();
+								}
+								break;
+							}
+							break;
 							
-							p.plateau[i][j].supFourmi();
-							p.plateau[mod(i - xcible, size)][mod(j - ycible , size)].ajoutFourmi(plateau[i][j].getOccupante());
+						case 3: //fourmi jaune
+							switch(direction)
+							{
+							case 0: //nord, pas bleu
+								if(p.plateau[mod(i - 1 , size)][j].getOccupante() == null && p.getCouleurCase(mod(i - 1 , size), j) != 2)
+								{
+									p.plateau[mod(i - 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
+									p.plateau[i][j].supFourmi();
+								}
+								break;
+								
+							case 1: //est, pas bleu
+								if(p.plateau[i][mod(j + 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j + 1 , size)) != 2)
+								{
+									p.plateau[i][mod(j + 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
+									p.plateau[i][j].supFourmi();
+								}
+								break;
+								
+							case 2: //sud, pas bleu
+								if(p.plateau[mod(i + 1, size)][j].getOccupante() == null && p.getCouleurCase(mod(i + 1 , size), j) != 2)
+								{
+									p.plateau[mod(i + 1 , size)][j].ajoutFourmi(plateau[i][j].getOccupante());
+									p.plateau[i][j].supFourmi();
+								}
+								break;
+								
+							case 3: //ouest, pas bleu
+								if(p.plateau[i][mod(j - 1 , size)].getOccupante() == null && p.getCouleurCase(i, mod(j - 1 , size)) != 2)
+								{
+									p.plateau[i][mod(j - 1 , size)].ajoutFourmi(plateau[i][j].getOccupante());
+									p.plateau[i][j].supFourmi();
+								}
+								break;
+							}
+							break;
+							
+						case 4:
+							int xcible = 0, ycible = 0,xmin=0,ymin=0;
+							boolean trouvecible = false;
+							for(int k = 0; k < size; k++)
+								for(int l = 0; l < size ; l++)
+								{
+									if(p.plateau[k][l].getOccupante() != null && p.plateau[k][l].getOccupante().getCouleur() != 4 )
+									{
+										if((i-k)*(i-k)+(j-l)*(j-l)<(i-xmin)*(i-xmin)+(j-ymin)*(j-ymin))
+										{
+											System.out.println("je"+k+" "+l);
+											xmin = k;
+											ymin = l;
+											trouvecible = true;
+										}
+									}
+								}
+							xcible = xmin;
+							ycible = ymin;
+							if(trouvecible)
+							{
+								xcible = i - xcible;
+								ycible = j - ycible;
+								
+								if(xcible < 0)
+									xcible = -1;
+								else if(xcible > 0)
+									xcible = 1;
+								if(ycible < 0)
+									ycible = -1;
+								else if(ycible > 0)
+									ycible = 1;
+								
+								if(p.plateau[mod(i - xcible, size)][mod(j - ycible , size)].getOccupante() == null || p.getCouleurFourmi(mod(i - xcible, size), mod(j - ycible , size)) != 4)
+								{
+									p.plateau[i][j].supFourmi();
+									p.plateau[mod(i - xcible, size)][mod(j - ycible , size)].ajoutFourmi(plateau[i][j].getOccupante());
+								}
+							}
+							break;
 						}
-						break;
 					}
-					
 				}
+					
 				
 				if (plateau[i][j].isPlante())
 					if(plateau[i][j].getOccupante()!= null)

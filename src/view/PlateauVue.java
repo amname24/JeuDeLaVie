@@ -2,6 +2,10 @@ package view;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
 
@@ -23,6 +27,11 @@ public class PlateauVue implements Observer
 	private JSlider slider;
 	private Boolean isPlante;
 	public int couleur;
+	private BufferedImage imgfR ;
+	private BufferedImage imgfB ;
+	private BufferedImage imgfJ ;
+	private BufferedImage imgfN ;
+	private BufferedImage imgP;
 	
 	public PlateauVue(FourmiController control)
 	{
@@ -43,6 +52,19 @@ public class PlateauVue implements Observer
 	
 	private void initComponents()
 	{
+		try{
+			BufferedImage imgfRO = ImageIO.read(new File("./src/assets/fR.png") );
+			imgfR = resize(imgfRO,20,20);
+			BufferedImage imgfBO = ImageIO.read(new File("./src/assets/fB.png") );
+			imgfB = resize(imgfBO,20,20);
+			BufferedImage imgfJO = ImageIO.read(new File("./src/assets/fJ.png") );
+			imgfJ = resize(imgfJO,20,20);
+			BufferedImage imgfNO = ImageIO.read(new File("./src/assets/fN.png") );
+			imgfN = resize(imgfNO,20,20);
+			BufferedImage imgPO = ImageIO.read(new File("./src/assets/plant.png") );
+			imgP = resize(imgPO,20,20);
+			
+		}catch(Exception e){}
 		mainFrame = new JFrame();
 		mainFrame.setTitle("Ant and Plant");
 		mainFrame.setLocationRelativeTo(null);
@@ -60,9 +82,9 @@ public class PlateauVue implements Observer
 	
 			public void mousePressed(MouseEvent e) {
 				if (isPlante)
-					control.AddPlante(e.getX()/10, e.getY()/10);
+					control.AddPlante(e.getY()/10, e.getX()/10);
 				else
-					control.modifyCell(e.getX() / 10, e.getY() / 10,couleur);
+					control.modifyCell(e.getY() / 10, e.getX() / 10,couleur);
 			}
 	
 			public void mouseReleased(MouseEvent e) {}
@@ -77,7 +99,7 @@ public class PlateauVue implements Observer
 			}
 		});
 		
-		btPlante = new JButton("<html>ajouter une<br>Plante</html>");
+		btPlante = new JButton("Plante",new ImageIcon(imgP));
 		btPlante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isPlante = true;
@@ -99,7 +121,6 @@ public class PlateauVue implements Observer
 				btNG.setEnabled(false);
 				btReset.setEnabled(false);
 				btPlay.setEnabled(false);
-				btPlante.setEnabled(false);
 				btStop.setEnabled(true);
 			}
 		});
@@ -110,7 +131,6 @@ public class PlateauVue implements Observer
 			public void actionPerformed(ActionEvent e) {
 				control.stopAnimation();
 				btNG.setEnabled(true);
-				btPlante.setEnabled(true);
 				btReset.setEnabled(true);
 				btPlay.setEnabled(true);
 				btStop.setEnabled(false);
@@ -124,28 +144,28 @@ public class PlateauVue implements Observer
 			}
 		});
 		
-		btFR = new JButton("Fourmi rouge");
+		btFR = new JButton("Fourmi rouge", new ImageIcon(imgfR));
 		btFR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isPlante = false;
 				couleur = 1;
 			}
 		});
-		btFB = new JButton("Fourmi bleue");
+		btFB = new JButton("Fourmi bleue", new ImageIcon(imgfB));
 		btFB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isPlante = false;
 				couleur = 2;
 			}
 		});
-		btFJ = new JButton("Fourmi jaune");
+		btFJ = new JButton("Fourmi jaune", new ImageIcon(imgfJ));
 		btFJ.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isPlante = false;
 				couleur = 3;
 			}
 		});
-		btFN = new JButton("Fourmi noire");
+		btFN = new JButton("Fourmi noire", new ImageIcon(imgfN));
 		btFN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isPlante = false;
@@ -163,18 +183,20 @@ public class PlateauVue implements Observer
 		animbox.add(btPlay);
 		animbox.add(btStop);
 		animbox.add(slider);
-		
 		mainbox.add(Box.createVerticalStrut(5));
 		mainbox.add(buttonbox);
 		mainbox.add(Box.createVerticalStrut(5));
 		mainbox.add(animbox);
 		mainbox.add(Box.createVerticalStrut(5));
-		
 		mainFrame.setContentPane(mainbox);
 	}
 
-	private ActionListener addActionListener(ActionListener actionListener) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	private static BufferedImage resize(BufferedImage img, int height, int width) {
+        Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return resized;
+    }
 }
