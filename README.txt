@@ -20,7 +20,7 @@ Toutes les fourmis de couleur :
   •Deux fourmis ne peuvent pas se retrouver sur une même case
 Fourmi Noir :
   •Mange les fourmis Rouge, jaune ou bleu.
-  •Se déplace en fonction d'une cible choisie aléatoirement parmi les fourmis de couleur.
+  •Se déplace en fonction de la cible la plus proche parmi les fourmis de couleur.
 Fonctionnement de la plante :
   La plante est une case spéciale (case verte) qui permet aux fourmis de couleur de se reproduire : si une fourmi passe sur cette 
   case, une nouvelle fourmi sera créée.
