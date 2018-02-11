@@ -104,7 +104,7 @@ public class Plateau extends Observable implements Cloneable{
 						p.plateau[i][j].setCouleur(couleur);
 				
 					//mouvement de la fourmi
-					if(p.getCouleurFourmi(i, j) == couleur) // on vÃ©rifie que la fourmi n'a pas ete mangee
+					if(p.getCouleurFourmi(i, j) == couleur) // on vérifie que la fourmi n'a pas ete mangee
 					{
 						switch(couleur)
 						{
@@ -220,7 +220,7 @@ public class Plateau extends Observable implements Cloneable{
 							break;
 							
 						case 4:
-							int xcible = 0, ycible = 0,xmin=200,ymin=200;
+							int xcible = 0, ycible = 0,xmin=0,ymin=0;
 							boolean trouvecible = false;
 							for(int k = 0; k < size; k++)
 								for(int l = 0; l < size ; l++)
