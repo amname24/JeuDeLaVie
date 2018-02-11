@@ -1,29 +1,18 @@
 Projet JeuDeLaVie Bastien Santini et Amna Amairi
 Fourmi de Langton
 Comportement des Fourmis :
-Fourmi Bleu :
-  •Si case blanche : tourne vers la gauche
-  •Si case jaune / bleu : tourne vers la droite
-  •Si case Rouge : peut pas aller  
-Fourmi Rouge :
-  •Si case blanche : tourne vers la gauche
-  •Si case bleu / rouge : tourne vers la droite
-  •Si case Jaune : peut pas aller  
-Fourmi Jaune :
-  •Si case blanche : tourne vers la gauche
-  •Si case rouge/ jaune : tourne vers la droite
-  •Si case bleue : peut pas aller  
-Toutes les fourmis de couleur :
-  •La fourmi change la couleur de la case sur laquelle elle se trouve dans sa couleur ; sauf si la case est de sa propre couleur.        
-   La case redevient alors blanche.
-  •La fourmi avance d’une case dans la direction de son orientation.
-  •Deux fourmis ne peuvent pas se retrouver sur une même case
-Fourmi Noir :
-  •Mange les fourmis Rouge, jaune ou bleu.
-  •Se déplace en fonction de la cible la plus proche parmi les fourmis de couleur.
-Fonctionnement de la plante :
-  La plante est une case spéciale (case verte) qui permet aux fourmis de couleur de se reproduire : si une fourmi passe sur cette 
-  case, une nouvelle fourmi sera créée.
-  En termes d'orientation des fourmis de couleur, cette case agit comme une case blanche. Pour l'instant cette case est ne peut pas 
-  être détruite, cependant une limitation de son utilisation pourra être utilisé pour éviter d'avoir un trop grand nombre de 
-  fourmis.
+
+Les règles de jeu sont les suivantes : 
+
+- Si la fourmi de couleur bleu est sur une case blanche, elle change la couleur de la case en bleu et elle se déplace vers la gauche. Si elle est sur une case jaune ou bien bleue, elle change la couleur de la case en bleu et elle se déplace vers la droite. De plus, une fourmi bleue n’a pas le droit d’aller sur une case rouge.
+
+- Si la fourmi de couleur rouge est sur une case blanche, elle change la couleur de la case en rouge et elle se déplace vers la gauche. Si elle est sur une case bleue ou bien rouge, elle change la couleur de la case en rouge et elle se déplace vers la droite. De plus, une fourmi rouge n’a pas le droit d’aller sur une case jaune.  
+
+- Si la fourmi de couleur jaune est sur une case blanche, elle change la couleur de la case en jaune et elle se déplace vers la gauche. Si elle est sur une case rouge ou bien jaune, elle change la couleur de la case en jaune et elle se déplace vers la droite. De plus, une fourmi jaune n’a pas le droit d’aller sur une case bleue.
+
+- Une fourmi de couleur noire mange 3 fourmis de couleurs jaune, rouge ou bleue puis elle meure. Elle choisit la cible la plus proche.
+
+
+- La Plante est une case spéciale (case verte) qui permet aux fourmis bleues, rouges ou jaunes de se reproduire : si une fourmi passe sur cette case, une nouvelle fourmi sera créée. Au bout de 3 fourmis créée la Plante est morte.
+
+Lorsque les fourmis sortent de la grille, elles reviennent de l’autre cotée du plateau.
