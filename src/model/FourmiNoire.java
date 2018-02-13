@@ -11,17 +11,20 @@ public class FourmiNoire implements Fourmi{
 	 * 		   
 	 */
 	private int couleur;
+	private int dureeVie;
 	
 	public FourmiNoire()
 	{
 		direction = 0;
 		couleur = 4;
+		dureeVie = 3;
 	}
 	
 	private FourmiNoire(int d)
 	{
-		direction = d;
+		direction = 0;
 		couleur = 4;
+		dureeVie = d;
 	}
 	
 	public int getDirection()
@@ -39,9 +42,17 @@ public class FourmiNoire implements Fourmi{
 		return(direction);
 	}
 	
+	public boolean meurt()
+	{
+		dureeVie --;
+		if(dureeVie <= 0)
+			return(true);
+		else
+			return(false);
+	}
 	public Object clone()
 	{
-		FourmiNoire f = new FourmiNoire(direction);
+		FourmiNoire f = new FourmiNoire(dureeVie);
 		return(f);
 	}
 	

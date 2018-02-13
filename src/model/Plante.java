@@ -5,7 +5,7 @@ public class Plante extends Case {
 	private int dureeDeVie;
 		
 	public Plante(){
-		dureeDeVie = 2;
+		dureeDeVie = 3;
 		this.setCouleur(-1);
 	}
 	

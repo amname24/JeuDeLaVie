@@ -104,7 +104,7 @@ public class Plateau extends Observable implements Cloneable{
 						p.plateau[i][j].setCouleur(couleur);
 				
 					//mouvement de la fourmi
-					if(p.getCouleurFourmi(i, j) == couleur) // on vérifie que la fourmi n'a pas ete mangee
+					if(p.getCouleurFourmi(i, j) == couleur) // on vÃ©rifie que la fourmi n'a pas ete mangee
 					{
 						switch(couleur)
 						{
@@ -220,7 +220,7 @@ public class Plateau extends Observable implements Cloneable{
 							break;
 							
 						case 4:
-							int xcible = 0, ycible = 0,xmin=0,ymin=0;
+							int xcible = 0, ycible = 0,xmin=200,ymin=200;
 							boolean trouvecible = false;
 							for(int k = 0; k < size; k++)
 								for(int l = 0; l < size ; l++)
@@ -229,7 +229,7 @@ public class Plateau extends Observable implements Cloneable{
 									{
 										if((i-k)*(i-k)+(j-l)*(j-l)<(i-xmin)*(i-xmin)+(j-ymin)*(j-ymin))
 										{
-											System.out.println("je"+k+" "+l);
+											//System.out.println("je"+k+" "+l);
 											xmin = k;
 											ymin = l;
 											trouvecible = true;
@@ -252,11 +252,21 @@ public class Plateau extends Observable implements Cloneable{
 								else if(ycible > 0)
 									ycible = 1;
 								
-								if(p.plateau[mod(i - xcible, size)][mod(j - ycible , size)].getOccupante() == null || p.getCouleurFourmi(mod(i - xcible, size), mod(j - ycible , size)) != 4)
+								if(p.plateau[mod(i - xcible, size)][mod(j - ycible , size)].getOccupante() == null)
 								{
-									p.plateau[i][j].supFourmi();
 									p.plateau[mod(i - xcible, size)][mod(j - ycible , size)].ajoutFourmi(plateau[i][j].getOccupante());
+									p.plateau[i][j].supFourmi();
 								}
+								else
+									if(p.getCouleurFourmi(mod(i - xcible, size), mod(j - ycible , size)) != 4)
+									{
+										if(!((FourmiNoire)(plateau[i][j].getOccupante())).meurt())
+											p.plateau[mod(i - xcible, size)][mod(j - ycible , size)].ajoutFourmi(plateau[i][j].getOccupante());
+										else
+											p.plateau[mod(i - xcible, size)][mod(j - ycible , size)].supFourmi();
+
+										p.plateau[i][j].supFourmi();
+									}
 							}
 							break;
 						}
